@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Declaro la Guerra</title>
+    
+</head>
+<body>
+
+    <video autoplay loop plays-inline src="/recursos/fondo.mp4" class="video"></video>
+    
+    <div class="titulo">
+        <h1>STOP</h1>
+        <h2>Guerra de Paises</h2>
+        <img id="bandera1" class="bandera" src="/recursos/bandera1.png" alt="">
+        <img id="bandera2" class="bandera" src="/recursos/bandera2.png" alt="">
+        <img id="bandera3" class="bandera" src="/recursos/bandera3.png" alt="">
+        <img id="bandera4" class="bandera" src="/recursos/bandera4.png" alt="">
+        <img id="bandera5" class="bandera" src="/recursos/bandera5.png" alt="">
+        <img id="bandera6" class="bandera" src="/recursos/bandera6.png" alt="">
+        <img id="bandera7" class="bandera" src="/recursos/bandera7.png" alt="">
+        <img id="bandera8" class="bandera" src="/recursos/bandera8.png" alt="">
+    </div>
+
+    <div id="game">
+        <div id="rules">
+            <h1>¡Bienvenidos a "STOP"!</h1>
+            <p>Prepárate para uno de los juegos más emocionantes y estratégicos en el que la velocidad y el ingenio lo son TODO. <br> ¡Es hora de declarar la guerra! 🌍💥</p>
+            <p>¿Tienes lo que se necesita para ser el último sobreviviente en este campo de batalla lleno de giros inesperados y sorpresas? ¡En este emocionante juego, no solo necesitarás suerte, sino también un agudo sentido de la distancia para derrotar a tus enemigos!</p>
+            <h3><strong>Reglas del juego:</strong></h3>
+                <ol>
+                    <li>Cada jugador debe escribir el nombre del pais al que quiere representar</li>
+                    <li>Cualquier jugador-pais empieza declarandole la guerra a otro</li>
+                    <li>EL jugador al que le declararon la guerra, debe correr y de manera rapida presionar el boton de Stop</li>
+                    <li>Al presionar stop todo se deben quedar quietos</li>
+                    <li>Seguidamente el jugador debe adivinar cuántos pasos hay entre el y cualquier otro pais</li></li>
+                    <li>Si acierta, su enemigo recibe un punto negativo. Si falla, el mismo recibe un punto negativo.</li>
+                    <li>El primer jugador que acumule 10 puntos negativos será descalificado.</li>
+                    <li>El juego acaba cuando quedan solo 2 jugadores y gana quien tenga menos puntos</li>
+                    <li>¡Recuerda moverte rápidamente para evitar ser seleccionado!</li>
+                </ol>
+                <!-- botón de iniciar juego -->
+                <button id="startButton">Iniciar Juego</button>
+        </div>
+        
+        <div id="players">
+            <!-- jugadores -->
+        </div>
+
+        <button id="stopButton">Stop</button>
+        <div id="message">
+            
+        </div>
+        <div id="scoreboard">
+            <h2>Tablero</h2>
+            <ul id="scoreList">
+                <!-- puntajes -->
+            </ul>
+        </div>
+
+    </div>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
