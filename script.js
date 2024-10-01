@@ -16,29 +16,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('startButton'); // Botón para iniciar el juego
     const stopButton = document.getElementById('stopButton'); // Botón para detener el juego
     const scoreList = document.getElementById('scoreList'); // Lista donde se muestran los puntajes
+    const scoreBoard = document.getElementById('scoreBoard'); // Contenedor del tablero (puntajes)
     const rulesSection = document.getElementById('rules'); // Sección que muestra las reglas del juego
 
     // Teclas disponibles para asignar a los jugadores
     const availableKeys = ['a', 's', 'd', 'f', 'g', 'h'];
+    scoreBoard.style.display = 'none';
 
     // Evento que se activa cuando se hace clic en el botón de inicio
     startButton.addEventListener('click', () => {
-        rulesSection.style.display = 'none'; // Oculta la sección de reglas
+        rulesSection.style.display = 'none'; 
+        scoreBoard.style.display = 'block';
         startGame(); // Inicia el juego
+
+        // Evento que se activa cuando se hace clic en el botón de regreso
+    const backButton = document.getElementById('backButton');
+    backButton.addEventListener('click', () => {
+        
+        // Reiniciar el juego
+        resetGame();
+        });
     });
 
     // Evento que se activa cuando se hace clic en el botón de detener
     stopButton.addEventListener('click', stopGame);
 
+    // Evento que se activa cuando se hace clic en el botón de regreso
+    const backButton = document.getElementById('backButton');
+    backButton.addEventListener('click', () => {
+        resetGame();
+    });
+
     function startGame() {
+         // Al iniciar el juego, ocultamos la sección de reglas y mostramos el área de juego
+    document.getElementById('rules').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    
+    // Mostramos el botón de regreso al iniciar el juego
+    backButton.style.display = 'block';
+
+
         // Solicita el número de jugadores
         const numPlayers = prompt(`Ingrese el número de jugadores (entre ${minPlayers} y ${maxPlayers}):`);
         // Valida que el número de jugadores esté dentro del rango permitido
-        if (numPlayers < minPlayers || numPlayers > maxPlayers) {
-            alert(`El número de jugadores debe estar entre ${minPlayers} y ${maxPlayers}.`); // Muestra un mensaje de error
-            return; // Termina la función si el número de jugadores es inválido
-        }
-
+            if (numPlayers < minPlayers || numPlayers > maxPlayers) {
+                alert(`El número de jugadores debe estar entre ${minPlayers} y ${maxPlayers}.`); // Muestra un mensaje de error
+                return; // Termina la función si el número de jugadores es inválido
+            }
+    
         playersContainer.innerHTML = ''; // Limpia el contenedor de jugadores previos
         players.length = 0; // Limpia el arreglo de jugadores previos
         points = {}; // Reinicia los puntos de los jugadores
@@ -46,23 +71,29 @@ document.addEventListener('DOMContentLoaded', () => {
         assignedKeys = {}; // Reinicia las teclas asignadas
         scoreList.innerHTML = ''; // Limpia los puntajes previos
         keyPressHandlerActive = true; // Reinicia la bandera de control de teclado
-
+    
         // Bucle para agregar jugadores
-
-
-        
         for (let i = 0; i < numPlayers; i++) {
-            // Solicita el nombre de cada jugador
-            const playerName = prompt(`Ingrese el nombre del jugador ${i + 1}:`);
+            let playerName;
+            // Bucle para asegurar que los jugadores no tengan el mismo nombre o que el nombre esté vacío
+            do {
+                playerName = prompt(`Ingrese el nombre del jugador ${i + 1}:`); // No usamos .trim()
+                if (!playerName) {
+                    alert('El nombre no puede estar vacío. Por favor, ingrese un nombre válido.');
+                } else if (players.includes(playerName)) {
+                    alert('El nombre ya está tomado. Por favor, elige otro nombre.');
+                }
+            } while (!playerName || players.includes(playerName)); // Repite si el nombre está vacío o ya está en uso
+    
             players.push(playerName); // Agrega el jugador al arreglo
             points[playerName] = 0; // Inicializa los puntos del jugador en 0
             stepCounters[playerName] = 0; // Inicializa el contador de pasos del jugador en 0
-
+    
             // Asigna una tecla única a cada jugador
             const assignedKey = availableKeys[i];
             assignedKeys[playerName] = assignedKey.toLowerCase(); // Asigna la tecla a minúscula
             alert(`${playerName}, tu tecla asignada es "${assignedKey}".`); // Muestra un mensaje con la tecla asignada
-
+    
             // Crea un elemento HTML para el jugador
             const playerElement = document.createElement('div');
             playerElement.classList.add('player'); // Añade una clase CSS al elemento
@@ -70,25 +101,26 @@ document.addEventListener('DOMContentLoaded', () => {
             playerElement.addEventListener('click', () => selectPlayer(playerName)); // Agrega un evento de clic para seleccionar al jugador
             playersContainer.appendChild(playerElement); // Añade el elemento del jugador al contenedor
             playerElements.push(playerElement); // Almacena el elemento en el arreglo de elementos de jugadores
-
+    
             // Crea un elemento de lista para el puntaje del jugador
             const scoreItem = document.createElement('li'); 
             scoreItem.id = `score-${playerName}`; // Establece un ID único para el elemento de puntaje
             scoreItem.textContent = `${playerName}: 0 puntos negativos`; // Muestra el puntaje inicial
             scoreList.appendChild(scoreItem); // Añade el elemento de puntaje a la lista
         }
-
+    
         arrangePlayersInCircle(); // Organiza a los jugadores en un círculo
         messageElement.textContent = 'Elige un jugador para declarar la guerra.'; // Mensaje inicial
         currentPlayer = null; // Reinicia el jugador actual
         stopButton.style.display = 'block'; // Muestra el botón de detener
         startButton.style.display = 'none'; // Oculta el botón de iniciar
-
+    
         // Asigna eventos de teclado para cada jugador
         if (keyPressHandlerActive) {
             document.addEventListener('keydown', handleKeyPress); // Escucha los eventos de teclado
         }
     }
+    
 
     let initialPositions = {}; // Objeto para almacenar las posiciones iniciales de los jugadores
 
@@ -103,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const angle = index * angleStep; // Ángulo para cada jugador
             const x = centerX + radius * Math.cos(angle); // Posición X
             const y = centerY + radius * Math.sin(angle); // Posición Y
+            
     
             // Guarda la posición inicial del jugador
             initialPositions[players[index]] = { left: x, top: y };
@@ -137,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Recupera el ángulo original del jugador
         const angle = parseFloat(playerElement.dataset.angle);
 
-        const stepSize = 10; // Define la cantidad de píxeles que se moverá el jugador
+        const stepSize = 5; // Define la cantidad de píxeles que se moverá el jugador
 
         // Calcula las nuevas posiciones moviendo al jugador en dirección diagonal
         let newTop = currentTop + stepSize * Math.sin(angle); // Nueva posición en Y
@@ -165,13 +198,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectPlayer(player) {
         if (!currentPlayer) { // Si no hay jugador actual
             currentPlayer = player; // Establece el jugador actual
-            messageElement.textContent = `Declaro la guerra a ${player}. ¡Todos corran!`; // Mensaje de guerra
+            messageElement.textContent = `Declaro la guerra a mi peor enemigo que es....${player}. ¡Todos corran!`; // Mensaje de guerra
         } else {
             // Verifica si el jugador se está eligiendo a sí mismo
             if (currentPlayer === player) {
-                alert(`No puedes declarar la guerra a ti mismo.`); // Mensaje de error
-                return; // Termina la función si se elige a sí mismo
+                alert(`No puedes contar pasos hacia ti mismo`); // Mensaje de error
+                return; // Termina la función si se elige a si mismo
             }
+
     
             // Aquí se calculará la distancia en base a los pasos acumulados
             const stepsToPlayer = stepCounters[player]; // Obtiene los pasos acumulados hacia el jugador seleccionado
@@ -210,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const player = players[i];
 
             // Comprueba si el jugador tiene 10 o más puntos negativos
-            if (points[player] >= 10) {
+            if (points[player] == 3) {
                 // Verifica si el alert ya ha sido mostrado
                 if (!disqualifiedPlayersAlerts[player]) {
                     alert(`${player} ha sido descalificado.`); // Mensaje de descalificación
@@ -298,4 +332,4 @@ document.addEventListener('DOMContentLoaded', () => {
             scoreList.appendChild(scoreItem); // Añade el elemento de puntaje a la lista
         }
     }
-});
+    });

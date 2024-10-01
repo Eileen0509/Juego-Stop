@@ -3,14 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
-    <title>Declaro la Guerra</title>
+    <title>STOP</title>
     
 </head>
 <body>
 
+    <button id="backButton" class="back-button">
+        <i class='bx bx-arrow-back'></i>
+    </button>
+
     <video autoplay loop plays-inline src="/recursos/fondo.mp4" class="video"></video>
-    
+
     <div class="titulo">
         <h1>STOP</h1>
         <h2>Guerra de Paises</h2>
@@ -28,7 +33,7 @@
         <div id="rules">
             <h1>¡Bienvenidos a "STOP"!</h1>
             <p>Prepárate para uno de los juegos más emocionantes y estratégicos en el que la velocidad y el ingenio lo son TODO. <br> ¡Es hora de declarar la guerra! 🌍💥</p>
-            <p>¿Tienes lo que se necesita para ser el último sobreviviente en este campo de batalla lleno de giros inesperados y sorpresas? ¡En este emocionante juego, no solo necesitarás suerte, sino también un agudo sentido de la distancia para derrotar a tus enemigos!</p>
+            <p>¿Tienes lo que se necesita para ser el último sobreviviente en este campo de batalla? ¡En este emocionante juego, no solo necesitarás suerte, sino también un agudo sentido de la distancia para derrotar a tus enemigos!</p>
             <h3><strong>Reglas del juego:</strong></h3>
                 <ol>
                     <li>Cada jugador debe escribir el nombre del pais al que quiere representar</li>
@@ -39,7 +44,7 @@
                     <li>Si acierta, su enemigo recibe un punto negativo. Si falla, el mismo recibe un punto negativo.</li>
                     <li>El primer jugador que acumule 10 puntos negativos será descalificado.</li>
                     <li>El juego acaba cuando quedan solo 2 jugadores y gana quien tenga menos puntos</li>
-                    <li>¡Recuerda moverte rápidamente para evitar ser seleccionado!</li>
+                    <li>¡Recuerda moverte rápidamente con tu tecla asignada para evitar ser seleccionado!</li>
                 </ol>
                 <!-- botón de iniciar juego -->
                 <button id="startButton">Iniciar Juego</button>
@@ -50,10 +55,13 @@
         </div>
 
         <button id="stopButton">Stop</button>
+        
+
         <div id="message">
             
         </div>
-        <div id="scoreboard">
+
+        <div id="scoreBoard">
             <h2>Tablero</h2>
             <ul id="scoreList">
                 <!-- puntajes -->
